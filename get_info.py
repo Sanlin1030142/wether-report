@@ -1,5 +1,8 @@
 import requests
 from xml.etree import ElementTree as ET
+import os
+from datetime import datetime
+from datetime import timedelta
 
 def generate_html_for_element(element, indent=0):
     html_content = ""
@@ -11,8 +14,21 @@ def generate_html_for_element(element, indent=0):
         html_content += "  " * indent + f"<tr><td>{element.tag}</td><td>{element.text}</td></tr>\n"
     return html_content
 
+
+# 根據時間生成url
+def get_url_by_time(startTime, endTime):
+    return f"https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-005?Authorization=CWA-DDE75E74-3BE3-415B-A2DC-ADAA80D9B8BB&limit=1&format=XML&locationName=%E6%A5%8A%E6%A2%85%E5%8D%80&sort=time&startTime={startTime}T18%3A00%3A00&dataTime={endTime}T06%3A00%3A00"
+
+# 獲得當前日期
+def get_current_date():
+    return datetime.now().strftime("%Y-%m-%d")
+
+# 獲得明天日期
+def get_tomorrow_date():
+    return (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d")
+
 # API URL
-url = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-005?Authorization=CWA-DDE75E74-3BE3-415B-A2DC-ADAA80D9B8BB&limit=1&format=XML&locationName=%E6%A5%8A%E6%A2%85%E5%8D%80&sort=time&startTime=2024-02-01T18%3A00%3A00&dataTime=2024-02-02T06%3A00%3A00"
+url = get_url_by_time(get_current_date(), get_tomorrow_date())
 
 # 發送請求
 response = requests.get(url)
