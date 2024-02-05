@@ -41,6 +41,9 @@ if response.status_code == 200:
     # 開始 HTML 文檔
     html_content = "<html>\n<head>\n<title>天氣報告</title>\n</head>\n<body>\n<h1>天氣報告</h1>\n<table border='1'>\n"
 
+    # 找到records元素做為根元素
+    root = root.find("records")
+
     # 遍歷 XML 結構並生成 HTML
     html_content += generate_html_for_element(root)
 
