@@ -1,0 +1,26 @@
+name: 天氣資訊自動更新
+
+on:
+  schedule:
+    # 每天 UTC 時間 23:00 執行，對應到 UTC+8 時區的早上 7:00
+    - cron: '0 23 * * *'
+
+jobs:
+  fetch_and_update_weather_info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 檢出代碼
+        uses: actions/checkout@v2
+
+      - name: 設定 Python 環境
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: 安裝依賴
+        run: |
+          pip install requests
+
+      - name: 執行天氣資訊更新腳本
+        run: |
+          python get_info.py
