@@ -24,3 +24,11 @@ jobs:
       - name: 執行天氣資訊更新腳本
         run: |
           python get_info.py
+
+      - name: 推送更新到 GitHub
+        run: |
+          git config --global user.name 'Sanlin1030142'
+          git config --global user.email 'roger1030142@gmail.com'
+          git add -f ../weather_report.html
+          git commit -m "Update weather info"
+          git push
