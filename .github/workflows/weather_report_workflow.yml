@@ -29,6 +29,6 @@ jobs:
         run: |
           git config --global user.name 'Sanlin1030142'
           git config --global user.email 'roger1030142@gmail.com'
-          git add -f ../../doc/index.html
+          git add -f ../../docs/index.html
           git commit -m "Update weather info"
           git push
