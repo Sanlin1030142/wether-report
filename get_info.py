@@ -26,7 +26,7 @@ if response.status_code == 200:
         html_content += "</body>\n</html>"
         
         # 將 HTML 內容存儲到檔案中
-        with open('./doc/index.html', 'w', encoding='utf-8') as file:
+        with open('./docs/index.html', 'w', encoding='utf-8') as file:
             file.write(html_content)
             
         print("天氣報告 HTML 頁面已生成。")
