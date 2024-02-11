@@ -2,8 +2,7 @@ name: 天氣資訊自動更新
 
 on:
   schedule:
-# 每天 UTC 時間 23:00 執行，對應到 UTC+8 時區的早上 7:00
-    - cron: '0 23 * * *'
+    - cron: '0 23 * * *' # 每天 UTC 時間 23:00 執行，對應到 UTC+8 時區的早上 7:00
 
 jobs:
   update_weather_report:
@@ -11,8 +10,7 @@ jobs:
     steps:
       - name: 檢出代碼
         uses: actions/checkout@v2
-        with:
-          persist-credentials: false  # 这个很重要，以便后面可以使用新的令牌
+        # 不需要设置 persist-credentials: false
 
       - name: 設定 Python 環境
         uses: actions/setup-python@v2
@@ -20,22 +18,18 @@ jobs:
           python-version: '3.x'
 
       - name: 安裝依賴
-        run: |
-          pip install requests
-
+        run: pip install requests
+      
       - name: 執行天氣資訊更新腳本
-        run: |
-          python get_info.py
-
+        run: python get_info.py
+      
       - name: 配置 git 用户信息
         run: |
           git config --global user.name 'Sanlin1030142'
           git config --global user.email 'roger1030142@gmail.com'
-
+      
       - name: 提交和推送更新
         run: |
           git add -f docs/index.html
           git commit -m "Update weather info" || echo "No changes to commit"
           git push
-        env:  # 设置环境变量，使用 GITHUB_TOKEN
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
